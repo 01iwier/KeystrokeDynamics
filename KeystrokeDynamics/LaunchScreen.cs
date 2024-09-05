@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace KeystrokeDynamics {
@@ -11,8 +10,7 @@ namespace KeystrokeDynamics {
         public LaunchScreen() {
             InitializeComponent();
             pbLoadingBar.Width = 0;
-            timer = new Timer();
-            timer.Interval = 16;
+            timer = new Timer() { Interval = 16 };
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -29,7 +27,6 @@ namespace KeystrokeDynamics {
                 if (tickCounter % 6 == 0) { UpdateLoadingLabel(); }
                 if (pbLoadingBar.Width > 380) { this.Opacity -= 0.08; }
             }
-
         }
 
         private void UpdateLoadingLabel() {
@@ -37,10 +34,6 @@ namespace KeystrokeDynamics {
             string loadingText = "Loading";
             for (int i = 0; i < dotCount; i++) { loadingText += "."; }
             lblLoading.Text = loadingText;
-        }
-
-        private void LaunchScreen_Load(object sender, EventArgs e) {
-
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -17,18 +16,12 @@ namespace KeystrokeDynamics {
             LoadForm();
         }
 
-        
-
         private void LoadForm() {
             UpdateComboBox();
         }
 
         private void MainMenu_FormClosed(object sender, FormClosedEventArgs e) {
             loadS.Close();
-        }
-
-        private void MainMenu_Load(object sender, EventArgs e) {
-
         }
 
         private void MainMenu_Activated(object sender, EventArgs e) {
@@ -69,44 +62,30 @@ namespace KeystrokeDynamics {
                     MessageBox.Show("Incorrect Password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-
             } else {
                 MessageBox.Show("Please Select A Valid Profile");
             }
         }
 
-        /// 
-        /// 
-        /// 
-
         private string PromptForPassword() {
             using (var form = new Form()) {
-                form.FormBorderStyle = FormBorderStyle.FixedToolWindow; // Remove the border from the form
+                form.FormBorderStyle = FormBorderStyle.FixedToolWindow;
                 form.Text = "Enter Password";
 
-                var lbl = new Label() { Text = "Enter Password", Font = new Font("Futura Heavy", 18f), AutoSize = true, ForeColor = Color.FromArgb(226, 183, 20) };
-                lbl.Anchor = AnchorStyles.None;
+                var lbl = new Label() { Text = "Enter Password", Font = new Font("Futura Heavy", 18f), AutoSize = true, ForeColor = Color.FromArgb(226, 183, 20), Anchor = AnchorStyles.None };
                 
-                var passwordBox = new TextBox() { PasswordChar = '*', Name = "EnterPassword" };
-                passwordBox.Anchor = AnchorStyles.None;
-                passwordBox.Width = 200;
-                passwordBox.Height = 30;
+                var passwordBox = new TextBox() { PasswordChar = '*', Name = "EnterPassword", Anchor = AnchorStyles.None, Width = 200, Height = 30 };
 
-                var okButton = new Button() { Text = "OK", Width = 100 };
-                okButton.Anchor = AnchorStyles.None;
-                okButton.BackColor = SystemColors.Control;
+                var okButton = new Button() { Text = "OK", Width = 100, Anchor = AnchorStyles.None, BackColor = SystemColors.Control };
                 
-                var tableLayoutPanel = new TableLayoutPanel();
-                tableLayoutPanel.Dock = DockStyle.Fill;
-                tableLayoutPanel.BackColor = Color.FromArgb(50, 52, 55);
-                tableLayoutPanel.ColumnCount = 1;
+                var tableLayoutPanel = new TableLayoutPanel() { Dock = DockStyle.Fill, BackColor = Color.FromArgb(50, 52, 55), ColumnCount = 1 };
                 tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize)) ;
                 tableLayoutPanel.RowCount = 5;
-                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20)); // Added padding between label and password box
+                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
                 tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20)); // Added padding between label and password box
-                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Height of password box
-                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Auto-size for OK button
+                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
+                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                 tableLayoutPanel.Controls.Add(lbl, 0, 1);
                 tableLayoutPanel.Controls.Add(passwordBox, 0, 3);
                 tableLayoutPanel.Controls.Add(okButton, 0, 4);
@@ -160,20 +139,12 @@ namespace KeystrokeDynamics {
             }
         }
 
-        /// 
-        /// 
-        /// 
-    
         private void btnIdentify_Click(object sender, EventArgs e) {
-            /*if (IsCurrentUserInCombinedUserData()) {*/
                 Program.currentUser = "Anon";
                 Program.currentUserID = 11;
                 this.Hide();
                 AnonTestSelectionMenu test = new AnonTestSelectionMenu(this);
                 test.Show();
-           /* } else {
-                MessageBox.Show("Error: Current user's ID not found in CombinedUserData.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
         }
 
         private bool IsCurrentUserInCombinedUserData() {
@@ -219,6 +190,7 @@ namespace KeystrokeDynamics {
                             cbProfiles.Items.Add(userName);
                         }
                     }
+                    
                     if (!string.IsNullOrEmpty(Program.currentUser) && cbProfiles.Items.Contains(Program.currentUser)) {
                         cbProfiles.SelectedItem = Program.currentUser;
                     }

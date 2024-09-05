@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KeystrokeDynamics {
@@ -25,12 +20,6 @@ namespace KeystrokeDynamics {
         private void pbClose_Click(object sender, EventArgs e) {
             this.Close();
         }
-
-        private void NewUserForm_Load(object sender, EventArgs e) {
-            //MessageBox.Show("Please enter your name" + Environment.NewLine + "(must start with a capital and only contain letters)." + Environment.NewLine + "Password must be 5 characters or more.");
-        }
-
-        
 
         private bool IsValidName(string name) {
             return !string.IsNullOrWhiteSpace(name) && name.All(char.IsLetter) && char.IsUpper(name.First());
@@ -112,8 +101,6 @@ namespace KeystrokeDynamics {
                 return builder.ToString();
             }
         }
-
-        
 
         private void lblTitle_Click(object sender, EventArgs e) {
             Console.WriteLine(HashPassword("example"));

@@ -1,54 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
 namespace KeystrokeDynamics {
     public partial class TypingTest : Form {
+        
         private ITestSelectionMenu testRef;
-
         private bool[] pastError;
         private List<string> words;
-        
-        private int backspaceCount = 0;
-        private int lastWordIndex = -1;
-        private int countdownSeconds = 60;
-
-        private double cpm = 0;
-        private double accuracy = 0;
-        private double wordCount = 0;
-        private double charCount = 0;
-        private double avgHoldTime = 0;
-        private double avgSeekTime = 0;
-        private double wordCorrectCount = 0;
-        private double charErrorCount = 0;
-
-        private Timer countdownTimer;
-        private TimeSpan seekTime;
-        private TimeSpan holdTime;
-        private DateTime timeStamp;
-        private Stopwatch holdTimer = new Stopwatch();
-        private Stopwatch seekTimer = new Stopwatch();
-        private Stopwatch sessionTimer = new Stopwatch();
         private List<TimeSpan> holdTimes = new List<TimeSpan>();
         private List<TimeSpan> seekTimes = new List<TimeSpan>();
+
+        private Timer countdownTimer;
+        private TimeSpan seekTime, holdTime;
+        private DateTime timeStamp;
+        private Stopwatch holdTimer = new Stopwatch(), seekTimer = new Stopwatch(), sessionTimer = new Stopwatch();
+
+        private int backspaceCount = 0, lastWordIndex = -1, countdownSeconds = 60;
+        private double cpm = 0, accuracy = 0, wordCount = 0, charCount = 0, avgHoldTime = 0, avgSeekTime = 0, wordCorrectCount = 0, charErrorCount = 0;
+        
 
         public TypingTest(ITestSelectionMenu test) {
             InitializeComponent();
             testRef = test;
-
-            countdownTimer = new Timer();
-            countdownTimer.Interval = 1000;
+            countdownTimer = new Timer{Interval = 1000};
             countdownTimer.Tick += CountdownTimer_Tick;
         }
 
@@ -71,7 +52,7 @@ namespace KeystrokeDynamics {
         }
 
         private void CountdownTimer_Tick(object sender, EventArgs e) {
-            countdownSeconds -= 1;
+            countdownSeconds--;
             lblTimer.Text = countdownSeconds.ToString("0s");
 
             if (countdownSeconds <= 0) {
@@ -120,7 +101,6 @@ namespace KeystrokeDynamics {
         }
 
         private void tbInput_KeyDown(object sender, KeyEventArgs e) {
-
             if (!holdTimer.IsRunning) {
                 holdTimer.Start();
             }
@@ -137,6 +117,9 @@ namespace KeystrokeDynamics {
         }
 
         private void tbInput_KeyUp(object sender, KeyEventArgs e) {
+            if (!seekTimer.IsRunning) {
+                seekTimer.Start();
+            }
 
             if (holdTimer.IsRunning) {
                 holdTimer.Stop();
@@ -147,15 +130,12 @@ namespace KeystrokeDynamics {
                 UpdateMetrics();
                 holdTimer.Reset();
             }
-
-            if (!seekTimer.IsRunning) {
-                seekTimer.Start();
-            }
         }
 
         private void SetRandomWord() {
             Random rand = new Random();
             int randIndex;
+            
             do {
                 randIndex = rand.Next(words.Count);
             } while (randIndex == lastWordIndex);

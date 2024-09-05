@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KeystrokeDynamics {
@@ -77,8 +70,7 @@ namespace KeystrokeDynamics {
                         using (SqlCommand anonymousUserCommand = new SqlCommand(anonymousUserQuery, connection)) {
                             anonymousUserCommand.Parameters.AddWithValue("@UserId", anonymousUserId);
 
-                            double avgSingleClick = 0.0, avgDoubleClick = 0.0, avgScroll = 0.0, avgHold = 0.0, count = 0.0,
-                                   accuracy = 0.0, backspaceCount = 0.0, errors = 0.0, avgHoldTime = 0.0, avgSeekTime = 0.0, cpm = 0.0;
+                            double avgSingleClick = 0.0, avgDoubleClick = 0.0, avgScroll = 0.0, avgHold = 0.0, count = 0.0, accuracy = 0.0, backspaceCount = 0.0, errors = 0.0, avgHoldTime = 0.0, avgSeekTime = 0.0, cpm = 0.0;
 
                             using (SqlDataReader reader = anonymousUserCommand.ExecuteReader()) {
                                 if (reader.Read()) {
